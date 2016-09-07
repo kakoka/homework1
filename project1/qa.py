@@ -6,7 +6,13 @@
 # Delimeter between question and answer is '|'. You MUST use delimeter do separate question and answer.
 # log.txt - in this file you can see statistics of you answers, stats adds into file after every game.
 
+import sys
 from datetime import datetime
+
+if sys.version_info[0] == 2:
+    input_function = raw_input
+else:
+    input_function = input
 
 #setting some variables
 A_COUNT = 0

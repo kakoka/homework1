@@ -19,3 +19,24 @@ Number of right answers:9	Number of wrong answers:1
 Username:Hwe Ss
 2016-09-07 21:16:37.975568
 Exit from game.
+Username:Da Ss
+2016-09-07 21:35:56.214432
+|		Question		|Answer		|True or False
+Da Ss
+2016-09-07 21:36:01.940568
+1. Как зовут создателя языка Python?: 		|Гвидо		|False
+2. В каком году был создан Python?: 		|1991		|False
+3. Какая последняя версия Python (2 или 3)?: 		|3		|False
+4. Какой оператор в Python позволяет делить числа с остатком?: 		|/		|False
+5. Какой оператор в Python возводит числа в степень?: 		|**		|False
+6. Можно ли использовать слово false в качестве переменной (да или нет)?: 		|нет		|False
+7. int(True) это 0 или 1?: 		|1		|False
+8. int(1.0e4) это сколько?: 		|10000		|False
+9. Вычислите False + 5.0 = ?: 		|5.0		|False
+10. Сюда еще можно добавить +100500 вопросов(да или нет)?: 		|да		|False
+Game over.
+Number of right answers:0	Number of wrong answers:10
+
+Username:Da Ss
+2016-09-07 21:36:01.940568
+Exit from game.
