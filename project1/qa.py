@@ -1,6 +1,6 @@
 # Homework 1. Difficult task. Pavel M. Konotopov
 # 07-09-2016
-# We have two files:
+# We have two additional files:
 # qa.txt file with questions and answers. You can add you question into file
 # String example to add: You cool question here?|Answer
 # Delimeter between question and answer is '|'. You MUST use delimeter do separate question and answer.
