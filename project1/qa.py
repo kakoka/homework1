@@ -3,7 +3,8 @@
 # We have two files:
 # qa.txt file with questions and answers. You can add you question into file
 # String example to add: You cool question here?|Answer
-# log.txt - in this file you can see statistics of you answers for every game.
+# Delimeter between question and answer is '|'. You MUST use delimeter do separate question and answer.
+# log.txt - in this file you can see statistics of you answers, stats adds into file after every game.
 
 from datetime import datetime
 
