@@ -78,7 +78,7 @@ while True:
                 a = (line.split("|")[1]).rstrip('\n')
                 #got the answer
                 qw = input(q)
-                #compare
+                #compare answer with user input
                 #right answer
                 if qw.lower() == a.lower():
                     print(a)
@@ -95,7 +95,7 @@ while True:
                     log_date_wrong = q +'\t\t'+ '|' + a +'\t\t' + '|' + "False" + '\n'
                     log.write(log_date_wrong)
                 A_COUNT += 1
-            #write final stats into file right and wrond answers
+            #write final stats into file right and wrong answers
             log_final_stat = "Game over.\nNumber of right answers:" + str(Q_COUNT)\
                              +'\tNumber of wrong answers:' + str(W_COUNT) + '\n\n'
             log.write(log_final_stat)
