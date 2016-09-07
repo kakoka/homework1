@@ -45,10 +45,7 @@ today = str(datetime.now())
 #Howdy %USERNAME%! Lets start...
 print("Howdy", name, "!\nToday is", today, "\n")
 
-#Write to log Name, Date
-
-
-#main
+#main while
 while True:
     #you never play
     if A_COUNT == 0:
