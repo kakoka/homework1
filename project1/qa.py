@@ -1,10 +1,15 @@
 # Homework 1. Difficult task. Pavel M. Konotopov
 # 07-09-2016
 # We have two additional files:
-# qa.txt file with questions and answers. You can add you question into file
+# qa.txt file with questions and answers.
+# You can add you question into file
 # String example to add: You cool question here?|Answer
-# Delimeter between question and answer is '|'. You MUST use delimeter do separate question and answer.
-# log.txt - in this file you can see statistics of you answers, stats adds into file after every game.
+# Delimeter between question and answer is '|'.
+# You MUST use delimeter do separate question and answer.
+# log.txt - in this file you can see statistics of you answers.
+# stats adds into file after every game.
+
+"""Tceh-Python homework1"""
 
 import sys
 from datetime import datetime
@@ -25,9 +30,9 @@ log = open(log_file, 'a', encoding='utf-8')
 #Who are you? no empty names supported!
 
 while True:
-    name = input ("What is your name, my little friend? \n My name is: ")
+    name = input("What is your name, my little friend? \n My name is: ")
     if name == '':
-        print ("You give me an empty name.\nTry again, please.")
+        print("You give me an empty name.\nTry again, please.")
     elif name != '':
         break
 
@@ -38,7 +43,7 @@ name = name.title()
 today = str(datetime.now())
 
 #Howdy %USERNAME%! Lets start...
-print ("Howdy",name,"!\n","Today is",today,"\n")
+print("Howdy", name, "!\nToday is", today, "\n")
 
 #Write to log Name, Date
 
@@ -49,7 +54,7 @@ while True:
     if A_COUNT == 0:
         #some stats
         log_header = "Username:" + name + '\n' + today + '\n'
-        log_format = '|' + '\t\t' + "Question" + '\t\t|' + "Answer" + '\t\t|' + "True or False" + '\n'
+        log_format = '|\t\tQuestion\t\t|Answer\t\t|True or False\n'
         log.write(log_header)
         log.write(log_format)
         st = input("Let's make choice!\nType 'Yes' to start game or 'No' to exit:")
@@ -79,22 +84,25 @@ while True:
                 #compare
                 #right answer
                 if qw.lower() == a.lower():
-                    print (a)
+                    print(a)
                     Q_COUNT += 1
-                    print ("You are right!\n", "Number of right answers: ", Q_COUNT, "Number of wrong answers:", W_COUNT)
-                    log_date_right = q +'\t\t'+ '|' + a + '\t\t'+'|' + "True" + '\n'
+                    print("You are right!\nNumber of right answers: ", Q_COUNT)
+                    print("Number of wrong answers: ", W_COUNT)
+                    log_date_right = q +'\t\t|' + a + '\t\t|True\n'
                     log.write(log_date_right)
                 #wrong answer
                 else:
-                    W_COUNT += 1 
-                    print ("Wrong answer!\n", "Number of right answers: ", Q_COUNT, "Number of wrong answers:", W_COUNT)
+                    W_COUNT += 1
+                    print("Wrong answer!\n", "Number of right answers: ", Q_COUNT)
+                    print("Number of wrong answers:", W_COUNT)
                     log_date_wrong = q +'\t\t'+ '|' + a +'\t\t' + '|' + "False" + '\n'
                     log.write(log_date_wrong)
                 A_COUNT += 1
             #write final stats into file right and wrond answers
-            log_final_stat = "Game over.\n" + "Number of right answers:" + str(Q_COUNT) +'\t'+ "Number of wrong answers:" + str(W_COUNT) + '\n' + '\n'
+            log_final_stat = "Game over.\nNumber of right answers:" + str(Q_COUNT)\
+                             +'\tNumber of wrong answers:' + str(W_COUNT) + '\n\n'
             log.write(log_final_stat)
-            print (log_final_stat)
+            print(log_final_stat)
     elif st.lower() == "no":
         print("Game over!\n")
         log_header = "Username:" + name + '\n' + today + '\n' + "Exit from game.\n"
