@@ -1,0 +1,18 @@
+pasha
+2016-09-07
+1. ��� ����� ����?: |John|False
+2. ��� ����� ����?: |Ann|True
+3. ��� ����� ����?: |Peter|False
+right:1wrong:2
+pasha
+2016-09-07
+Question|Answer||True or False1. Как зовут тебя?: |John|False
+2. Как зовут тебю?: |Ann|False
+3. Как зовут меню?: |Peter|False
+right:0wrong:3
+end of seesion
+1. Как зовут тебя?: |John|False
+2. Как зовут тебю?: |Ann|False
+3. Как зовут меню?: |Peter|True
+right:1wrong:2
+end of seesion
