@@ -1,5 +1,10 @@
 # Homework 1. Difficult task. Pavel M. Konotopov
 # 07-09-2016
+# We have two files:
+# qa.txt file with questions and answers. You can add you question into file
+# String example to add: You cool question here?|Answer
+# log.txt - in this file you can see statistics of you answers for every game.
+
 from datetime import datetime
 
 #setting some variables
