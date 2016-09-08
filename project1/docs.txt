@@ -1,1 +1,7 @@
 bla-bla
+
+git branch 'name' - создание новой ветки
+git checkout 'name' - переключение на новую ветку
+git push origin homework - изменения накатили
+
+git merge текущая на мастер
