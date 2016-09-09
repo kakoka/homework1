@@ -33,7 +33,7 @@ def main():
 
     while True:
         name = input("What is your name, my little friend? \n My name is: ")
-        if  name.isspace() == True or name.isnumeric() == True:
+        if  name == '':
             print("You give me an empty name.\nTry again, please.")
         else:
             break
