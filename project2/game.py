@@ -81,7 +81,6 @@ def main():
 
     while is_game_finished(game_matrix) is False:
         try:
-            print(is_game_finished(game_matrix))
             key_ = handle_user_input()
             perform_move(game_matrix, key_)
             print_field(game_matrix)
