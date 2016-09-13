@@ -78,18 +78,20 @@ def main():
         game_matrix = shuffle_field()
 
     print_field(game_matrix)
-
+    turns = 0
     while is_game_finished(game_matrix) is False:
         try:
             key_ = handle_user_input()
             perform_move(game_matrix, key_)
             print_field(game_matrix)
+            turns += 1
         except IndexError as err:
             print(err)
             print_field(game_matrix)
         except KeyboardInterrupt:
+            #print("Number of you terns:", turns)
             print('\nshutting down\n')
-    print("You win!")
+    print("You win! Number of you terns:", turns)
 
 if __name__ == '__main__':
     # See what this means:
