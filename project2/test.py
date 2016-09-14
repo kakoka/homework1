@@ -97,7 +97,7 @@ class TestIsGameFinished(BaseTestClass):
         self.assert_equal(result, True)
 
     def test_unfinished_states(self):
-        unfinished_state = list(range(15))
+        unfinished_state = list(range(16))
         unfinished_state.append(EMPTY_MARK)
         unfinished_state[0], unfinished_state[-1] = \
             unfinished_state[-1], unfinished_state[0]
