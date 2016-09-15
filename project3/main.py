@@ -70,17 +70,16 @@ def perform_command(command):
     command = command.lower()
     routes = get_routes()
 
+    command_class = routes[command]
+    command_inst = command_class()
+
     try:
-        command_class = routes[command]
-        command_inst = command_class()
-
         storage = Storage()
-
         if len(storage.items) == 0:
             try:
-                with open('data.pkl', 'rb') as input:
-                    storage.items = pickle.load(input)
-                input.close()
+                with open('data.pkl', 'rb') as fromfile:
+                    storage.items = pickle.load(fromfile)
+                fromfile.close()
             except:
                 print('no file')
         command_inst.perform(storage.items)
@@ -113,6 +112,8 @@ def main():
         try:
             command = parse_user_input()
             perform_command(command)
+        except KeyError:
+            print('Wrong command!')
         except UserExitException:
             break
         except KeyboardInterrupt:

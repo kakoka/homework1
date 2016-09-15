@@ -122,26 +122,31 @@ class DoneCommand(BaseCommand):
         return 'done'
 
     def perform(self, objects, *args, **kwargs):
-        obj_not_done = [obj for obj in objects if obj.done == False]
+        obj_not_done = [obj for obj in objects if obj.done is False]
         if len(obj_not_done) == 0:
             print('Nothing objects in undone list.')
             return
-
+        i = []
         print('Select number do set Done:\n')
         for index, obj in enumerate(obj_not_done):
             print('{}: {}'.format(index, str(obj)))
-
+            i += [index]
 
         input_function = get_input_function()
         selector = None
 
-        while True:
-            try:
-                selector = int(input_function('number:'))
-                objects[selector].done = True
-                break
-            except:
-                pass
+        #while True:
+        try:
+            selector = int(input_function('number:'))
+            if selector in i:
+                # selector = int(input_function('number:'))
+                obj_not_done[selector].done = True
+                # break
+            else:
+                print('not in list')
+        except ValueError:
+            print('Wrong value!')
+
 
 class UnDoneCommand(BaseCommand):
     @staticmethod
@@ -149,26 +154,31 @@ class UnDoneCommand(BaseCommand):
         return 'undone'
 
     def perform(self, objects, *args, **kwargs):
-        obj_not_done = [obj for obj in objects if obj.done == True]
-        if len(obj_not_done) == 0:
+        obj_done = [obj for obj in objects if obj.done is True]
+        if len(obj_done) == 0:
             print('Nothing objects in undone list.')
             return
-
+        i = []
         print('Select number do set Done:\n')
-        for index, obj in enumerate(obj_not_done):
+        for index, obj in enumerate(obj_done):
             print('{}: {}'.format(index, str(obj)))
-
+            i += [index]
 
         input_function = get_input_function()
         selector = None
 
-        while True:
-            try:
-                selector = int(input_function('number:'))
-                objects[selector].done = False
-                break
-            except:
-                pass
+        # while True:
+        try:
+            selector = int(input_function('number:'))
+            if selector in i:
+                # selector = int(input_function('number:'))
+                obj_done[selector].done = False
+                # break
+            else:
+                print('not in list')
+        except ValueError:
+            print('Wrong value!')
+
 
 class SaveListCommand(BaseCommand):
     @staticmethod

@@ -104,22 +104,3 @@ class ToReadItem(BaseItem):
         heading = input_function('Input heading: ')
         author = input_function('Input author: ')
         return ToReadItem(heading, author)
-
-# class ToReadItem(BaseItem):
-#     def __init__(self, heading, author):
-#         super(ToReadItem, self).__init__(heading)
-#         self.author = author
-#
-#     def __str__(self):
-#         return '{} ToRead: {} for {}'.format(
-#             '+' if self.done else '-',
-#             self.heading,
-#             self.author,
-#         )
-#
-#     @classmethod
-#     def construct(cls):
-#         input_function = get_input_function()
-#         heading = input_function('Input heading: ')
-#         author = input_function('Input author: ')
-#         return ToReadItem(heading, author)
