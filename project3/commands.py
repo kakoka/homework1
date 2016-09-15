@@ -124,7 +124,7 @@ class DoneCommand(BaseCommand):
     def perform(self, objects, *args, **kwargs):
         obj_not_done = [obj for obj in objects if obj.done is False]
         if len(obj_not_done) == 0:
-            print('Nothing objects in undone list.')
+            print('No items in done list.')
             return
         i = []
         print('Select number do set Done:\n')
@@ -156,7 +156,7 @@ class UnDoneCommand(BaseCommand):
     def perform(self, objects, *args, **kwargs):
         obj_done = [obj for obj in objects if obj.done is True]
         if len(obj_done) == 0:
-            print('Nothing objects in undone list.')
+            print('No items in undone list.')
             return
         i = []
         print('Select number do set Done:\n')
@@ -187,7 +187,7 @@ class SaveListCommand(BaseCommand):
 
     def perform(self, objects, *args, **kwargs):
         if len(objects) == 0:
-            print('There are no items to save.')
+            print('No items to save.')
             return
         out = open('data.pkl', 'wb')
         pickle.dump(objects, out, 2)
