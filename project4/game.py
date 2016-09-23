@@ -5,7 +5,7 @@ from func import get_input_function
 
 #задаем количество кораблей списком, символы для вывода полей
 
-NUMBER_OF_SHIPS = [2, 2]#[4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+NUMBER_OF_SHIPS = [2, 2, 2]#[4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 a = ' '
 b = 'O'
 input_function = get_input_function()
@@ -192,7 +192,7 @@ def construct_ships(num, l):
             #mnozhestvo_set_ships.add(ship_coordinates.)
 
             #print('ALL_SHIPS: множество координат кораблей', mnozhestvo_set_ships)
-            print('ALL_SHIPS HALO: множество точек вокруг кораблей', mnozhestvo_set_halo)
+            print('ALL_SHIPS HALO: множество точек вокруг кораблей', mnozhestvo_set_halo, len(mnozhestvo_set_halo))
 
             #mnozhestvo_set_ships.
 
