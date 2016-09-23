@@ -69,7 +69,8 @@ def input_xyz(num):
             st = False
 def construct_ships(num, l):
     '''эта функция конструирует корабли'''
-    # на вход поступает количество палуб корабля
+    # на вход поступает количество палуб корабля и длина списка storage.itmes, если нулевой
+    # то создаем корабли по списку
     # далее происходит проверка на
     # 1. выход за границы игрового поля
     # 2. наложение кораблей или пересечение кораблей
@@ -116,11 +117,11 @@ def construct_ships(num, l):
                             print('Координаты проверяемого корабля: ', ship_coordinates)
                             for q in ship_coordinates:
                                 #print('Множество точек добавляемого корабля', q)
-                                q = set(q)
-                                print('fdsfsdfsdf',q)
+                                #q = tuple(q)
+                                print('now is tuple', q)
                                 # сравниваем попадают ли точки добавляемого корабля в множество halo имеющихся кораблей
                                 # если не попадают, добавляем к множеству точек, точки нового корабля
-                                if q not in mnozhestvo_set_halo:
+                                if q in mnozhestvo_set_halo is True:
                                 #if mnozhestvo_set_halo.isdisjoint(q) is True:
                                     #print('результат сравнения для горизонтали: ', mnozhestvo_set_halo.isdisjoint(q))
                                     print('Не попадаем в множество')
@@ -132,7 +133,7 @@ def construct_ships(num, l):
                                         #if mnozhestvo_set_halo.isdisjoint(halo_pair) is False:
                                         mnozhestvo_set_halo.add(halo_pair)
                                 # если попадают - ошибка!
-                                elif q in mnozhestvo_set_halo:
+                                elif q in mnozhestvo_set_halo is False:
                                 #elif mnozhestvo_set_halo.isdisjoint(q) is False:
                                     #print('результат сравнения: ', q.isdisjoint(mnozhestvo_set_halo))
                                     #print('Попадаем на неправильные клетки! Надо переставить корабль')
@@ -162,11 +163,12 @@ def construct_ships(num, l):
                             print('Координаты проверяемого корабля: ', ship_coordinates)
                             #print('счетчик', l)
                             for q in ship_coordinates:
+                                print('now is tuple!!!!!!!!!!!!!!!!!!!!!!!!', q)
                                 #    q = ship_coordinates
                                 #print('Множество точек добавляемого корабля', q)
 
                                 # сравниваем попадают ли точки добавляемого корабля в множество halo имеющихся кораблей
-                                if q not in mnozhestvo_set_halo:
+                                if q in mnozhestvo_set_halo is True:
                                 #if mnozhestvo_set_halo.isdisjoint(q) is True:
                                     #print('результат сравнения: ', q.isdisjoint(mnozhestvo_set_halo))
                                     print('Не попадаем в множество')
@@ -178,7 +180,7 @@ def construct_ships(num, l):
                                         #if mnozhestvo_set_halo.isdisjoint(halo_pair) is False:
                                         mnozhestvo_set_halo.add(halo_pair)
     #                                   #mnozhestvo_set_halo.add(halo_pair)
-                                elif q in mnozhestvo_set_halo:
+                                elif q in mnozhestvo_set_halo is False:
                                 #elif mnozhestvo_set_halo.isdisjoint(q) is False:
                                     #print('результат сравнения: ', q.isdisjoint(mnozhestvo_set_halo))
                                     #print('Попадаем! Надо переставить корабль')
