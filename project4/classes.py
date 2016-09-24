@@ -25,7 +25,7 @@ class Player(object):
         self.pset = pset
         
     @classmethod
-    def construct(cls, name, num, *pset):
+    def construct(cls, name, num, pset):
         return Player(name, num, pset)
 
     def properties(self):
