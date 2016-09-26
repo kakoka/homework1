@@ -186,9 +186,7 @@ def field_positions_generation():
     positions = []
     for i in range(10):
         for j in range(10):
-            X = i
-            Y = j
-            pos = (X, Y)
+            pos = (i, j)
             positions.append(pos)
     return positions
 
@@ -236,7 +234,7 @@ def print_field_after_shoot_nepopal(field, x, y):
     for i in range(len(field)):
         for j in range(len(field[i])):
             try:
-                field[x][y] = ' '
+                field[x][y] = '.'
             except IndexError:
                 print('За границами игрового поля!')
     return(field)
@@ -311,15 +309,16 @@ def main():
 
     #все возможные ходы игрока robot1
     player_one_positions = field_positions_generation()
+    #print(len(player_one_positions))
     #все возможные ходы игрока robot2
     player_two_positions = field_positions_generation()
     #перемешиваем списки ходов
     random.shuffle(player_two_positions)
     random.shuffle(player_one_positions)
 
-    state = False
+
     flags = True
-    flags2 = True
+    flags2 = False
 
     # идея логики игры в том, что есть два игрока, у которых есть набор координат.
     # игроки поочередно обмениваются вопросами, есть ли в их наборе определенные координаты
@@ -328,70 +327,142 @@ def main():
 
     # но что-то у меня в логике не так
     # подглючивает, где-то что-то упустил
-
-    while len(players[0].pset) != 0 or len(players[1].pset) != 0 and state is True:
+    # игра продолжается до тех пор, пока не закончатся координаты в списках одного из игроков
+    state = True
+    while state is True:
+        #if len(players[0].pset) == 0 or len(players[1].pset) == 0:
+        #    state = False
+            #break
+    #while state:
 
         # игрок 1 стреляет
-        if len(players[1].pset) != 0:
-            #print(len(players[1].pset))
-            while flags is True:
-                i = random.choice(player_one_positions)
-                if i in players[1].pset:
-                    print(players[0].name, i, 'Попал!')
-                    players[1].pset.remove(i)
-                    player_one_positions.remove(i)
-                    random.shuffle(player_one_positions)
-                    print_field_after_shoot_popal(g1, i[0], i[1])
-                    flags = True
-                    #pass
-                else:
-                    flags is False
-                    print(players[0].name, i, 'Не попал!')
-                    print_field_after_shoot_nepopal(g1, i[0], i[1])
-                    player_one_positions.remove(i)
 
-                    break #flags = False
-            flags = True
-        elif len(players[1].pset) == 0:
-            print('Игрок ', players[0].name, 'победил. Поле F1')
-            state = True
-            print(players[0].name, players[0].pset)
-            print(players[1].name, players[1].pset)
-            print('F1: ')
-            print_field(f1)#свое поле
-            print('G1: ')
-            print_field(g1)#чужое
-            break
+        #if len(players[1].pset) != 0:
+        #elif len(players[0].pset) != 0 or len(players[1].pset) != 0:
+        while flags is True and flags2 is False and len(players[1].pset) != 0:
+            # выбор координаты для выстрела
+            i = random.choice(player_one_positions)
+            # проверка есть ли эта координата в списке координат кораблей игрока 2
+            if i in players[1].pset:
+                # если есть, то
+                # 1) удаляем ее из списка координат игрока 2
+                # 2) удаляем ее из списка возможных выстрелов игрока 1
+                # 3) обновляем поле игрока 2
+                # 4) стреляем еще раз
+                print(players[0].name, i, 'Попал!')
 
-        # игрок 2 стреляет
-        if len(players[0].pset) != 0: # or len(player_two_positions) != 0:
-            while flags2 is True:
-                r = random.choice(player_two_positions)
-                if r in players[0].pset:
-                    print(players[1].name, r, 'Попал!')
-                    players[0].pset.remove(r)
-                    player_two_positions.remove(r)
-                    print_field_after_shoot_popal(f1, r[0], r[1])
-                    random.shuffle(player_one_positions)
-                    flags2 = True
-                else:
-                    print(players[1].name, i, 'не попал!')
-                    print_field_after_shoot_nepopal(f1, r[0], r[1])
-                    player_two_positions.remove(r)
+                #random.shuffle(player_one_positions)
+                #print('robot2', len(players[1].pset))
+                print_field_after_shoot_popal(g1, i[0], i[1])
+                players[1].pset.remove(i)
+                player_one_positions.remove(i)
+                flags = True
+                if len(players[1].pset) == 0:
+                    state = False
+                    flags = False
                     flags2 = False
-                    break
-            flags2 = True
-        elif len(players[0].pset) == 0:
-            print('Игрок ', players[1].name, 'победил. Свое поле G1')
-            print(players[1].name, players[1].pset)
-            print(players[0].name, players[0].pset)
-            print('G1: ')
-            print_field(g1)#свое поле
-            print('F1: ')
-            print_field(f1)#чужое
-            state = True
-            break
-    print('gameover!')
+                    # if len(players[0].pset) == 0:
+                    # state = False  # and flags2 is False and flags is True:
+                    print('Игрок ', players[0].name, 'победил. Свое поле G1')
+                    print(players[0].name, players[0].pset)
+                    print(players[1].name, players[1].pset)
+                    print('Свое поле G1: ')
+                    print_field(f1)  # свое поле
+                    print('Поле соперника F1: ')
+                    print_field(g1)
+                    break # чужое
+                #else:
+                 #   pass
+            elif i not in players[1].pset:
+                # если нет, то удаляем координату из списка возможных выстрелов игрока 1
+                # и переход хода
+                print(players[0].name, i, 'Не попал!')
+                print_field_after_shoot_nepopal(g1, i[0], i[1])
+                player_one_positions.remove(i)
+                flags2 = True  #переход хода
+                flags = False  #переход
+            #else:
+            #    pass
+                #break
+                    #break  #flags = False
+        # if len(players[0].pset) == 0: # and len(players[1].pset) != 0:
+        #     state = False
+        #     flags = False
+        #     flags2 = False
+        #     # if len(players[0].pset) == 0:
+        #     # state = False  # and flags2 is False and flags is True:
+        #     print('Игрок ', players[1].name, 'победил. Свое поле G1')
+        #     print(players[1].name, players[1].pset)
+        #     print(players[0].name, players[0].pset)
+        #     print('Свое поле G1: ')
+        #     print_field(g1)  # свое поле
+        #     print('Поле соперника F1: ')
+        #     print_field(f1)  # чужое
+        # else:
+        #     pass
+                #break
+        while flags2 is True and flags is False and len(players[0].pset) != 0:
+            r = random.choice(player_two_positions)
+            if r in players[0].pset:
+                print(players[1].name, r, 'Попал!')
+                print_field_after_shoot_popal(f1, r[0], r[1])
+                players[0].pset.remove(r)
+                player_two_positions.remove(r)
+                #print(len(player_one_positions))
+                #print('robot1', len(players[0].pset))
+                #random.shuffle(player_one_positions)
+                flags2 = True
+                if len(players[0].pset) == 0:
+                    state = False
+                    flags = False
+                    flags2 = False
+                    print('Игрок ', players[1].name, 'победил. Поле F1')
+                    print(players[1].name, players[1].pset)
+                    print(players[0].name, players[0].pset)
+                    print('Cвое поле F1: ')
+                    print_field(g1)  # свое поле
+                    print('Поле соперника G1: ')
+                    print_field(f1)
+                    break # чужое
+                else:
+                    pass
+            elif r not in players[0].pset:
+                print(players[1].name, r, 'не попал!')
+                print_field_after_shoot_nepopal(f1, r[0], r[1])
+                player_two_positions.remove(r)
+                print(len(player_one_positions))
+                flags2 = False
+                flags = True
+            # else:
+            #     pass
+                #break
+                #break
+        # if len(players[1].pset) == 0: # and len(players[0].pset) != 0:
+        #     # state = False  # and flags is True and flags2 is False:
+        #     print('Игрок ', players[0].name, 'победил. Поле F1')
+        #     print(players[0].name, players[0].pset)
+        #     print(players[1].name, players[1].pset)
+        #     print('Cвое поле F1: ')
+        #     print_field(f1)  # свое поле
+        #     print('Поле соперника G1: ')
+        #     print_field(g1)  # чужое
+        #     state = False
+        #     flags = False
+        #     flags2 = False
+            #break
+        # else:
+        #     pass
+
+
+            #break
+    # else:
+    #     print('!')
+    #break
+    #flags = True
+    #else:
+        #print('dsd!')
+
+    print('конец игры!')
 
 if __name__ == '__main__':
     main()
