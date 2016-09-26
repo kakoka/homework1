@@ -12,11 +12,6 @@ class Storage(object):
             cls.player = []
             cls.items = []
         return cls.obj
-    # @staticmethod
-    # def list_ship_objects(self, objects):
-    #     obj_list = [obj for obj in objects]
-    #     for obj in enumerate(obj_list):
-    #         print(str(obj))
 
 class Player(object):
     def __init__(self, name, num, pset):
