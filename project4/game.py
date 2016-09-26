@@ -330,8 +330,8 @@ def main():
                 # 2) удаляем ее из списка возможных выстрелов игрока 1
                 # 3) обновляем поле игрока 2
                 # 4) стреляем еще раз
-                # print(players[0].name, i, 'Попал!')
 
+                print(players[0].name, i, 'Попал!')
                 shoot_popal(player_2_field, i[0], i[1])
                 players[1].pset.remove(i)
                 player_one_positions.remove(i)
@@ -353,6 +353,7 @@ def main():
             elif i not in players[1].pset:
                 # если нет, то удаляем координату из списка возможных выстрелов игрока 1
                 # и переход хода
+                print(players[0].name, i, 'Мимо!')
                 shoot_mimo(player_2_field, i[0], i[1])
                 player_one_positions.remove(i)
                 flag_player_2 = True  # переход хода
@@ -364,7 +365,7 @@ def main():
             r = random.choice(player_two_positions)
 
             if r in players[0].pset:
-
+                print(players[1].name, r, 'Попал!')
                 shoot_popal(player_1_field, r[0], r[1])
                 players[0].pset.remove(r)
                 player_two_positions.remove(r)
@@ -381,6 +382,7 @@ def main():
                     break  # чужое
 
             elif r not in players[0].pset:
+                print(players[1].name, r, 'Мимо!')
                 shoot_mimo(player_1_field, r[0], r[1])
                 player_two_positions.remove(r)
                 flag_player_2 = False
