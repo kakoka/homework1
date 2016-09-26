@@ -11,11 +11,11 @@ from func import get_input_function
 NUMBER_OF_SHIPS = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1] #паттерн для создания кораблей
 input_function = get_input_function()
 ship_coordinates_list = []  # множество кординат всех коралбей одного игрока
-ship_halo_coordinates = []  # множество точек, окружиющие корабли, куда нельзя ставить другие корабли
-halo_pattern_h = [-1, 0, 1]
-halo_pattern_v = [1, 0, -1]
-halo_pattern = [-1, 0, 1]
+ship_halo_coordinates = []  # множество точек, окружающие корабли, куда нельзя ставить другие корабли
+halo_pattern_h = [-1, 0, 1]  # это паттерны для обхода координат кораблей, для построения зоны, куда нельзя
+halo_pattern_v = [1, 0, -1]  # ставить корабли
 
+# определяем функции
 
 def input_ships_coordinates_by_robot(num):
     '''бездушный робот генерит координаты случайным образом'''
@@ -61,7 +61,7 @@ def input_ship_coordinates_by_human(num):
             state = False
 
 
-def construct_ships(num, l):
+def construct_ships(num, len_of_ships_list_in_storage):
     '''эта функция конструирует корабли и размещает их на поле'''
     # на вход поступает количество палуб корабля и длина списка storage.itmes в котором хранятся создаваемые корабли,
     # если список нулевой, то создаем корабли по списку.
@@ -76,10 +76,10 @@ def construct_ships(num, l):
     while state is False:
         try:
             # получаем от робота координаты
-            rt = input_ships_coordinates_by_robot(num)  # функция, которая генерит рандомные координаты
-            x = rt[0]  # координата x
-            y = rt[1]  # координата y
-            z = rt[2]  # z - ориентация 0 - горизонтально, 1 - вертикально
+            got_coordinates = input_ships_coordinates_by_robot(num)  # функция, которая генерит рандомные координаты
+            x = got_coordinates[0]  # координата x
+            y = got_coordinates[1]  # координата y
+            z = got_coordinates[2]  # z - ориентация 0 - горизонтально, 1 - вертикально
 
             # эта проверка настроена на робота, который генерирует не отрицательные целые числа)
             # для человека - проверка на значение еще будет включать проверку на знак числа
@@ -91,13 +91,17 @@ def construct_ships(num, l):
 
                 # для горизонтальной ориентация корабля
                 if z is False:
+                    # генерируем пару x, y
                     ship_coordinates = [(x, y) for x in range(x, x + num)]
-                    # проверка по горизонтали - halo
+
+                    # проверка по горизонтали
                     # мы ставим корабль только тогда, когда он не пересекается с другими кораблями и
-                    # находится не зоне действия других кораблей
+                    # находится вне зоны действия других кораблей
+
                     for i in ship_coordinates:
-                        # первый корабль на поле - заполняем halo - окружение
-                        if l is 0:
+
+                        # это для первого первый корабль на поле - заполняем halo - окружение
+                        if len_of_ships_list_in_storage is 0:
                             for d, z in [(d, z) for d in halo_pattern_h for z in halo_pattern_v]:
                                 halo_x = i[0] + d
                                 halo_y = i[1] + z
@@ -106,7 +110,7 @@ def construct_ships(num, l):
                         # для всех следующих проверяем, попадают ли точки корабля в множество точек halo
                         # если нет - добавляем новые, если попали не туда, то просим переввести корабль
                         # робот повторяет ввод
-                        elif l is not 0:
+                        elif len_of_ships_list_in_storage is not 0:
                             # сравниваем попадают ли точки добавляемого корабля в множество halo имеющихся кораблей
                             # если не попадают, добавляем к множеству точек, точки нового корабля
                             if i in ship_halo_coordinates:
@@ -125,7 +129,7 @@ def construct_ships(num, l):
                     # мы ставим корабль только тогда, когда он не пересекается с другими и
                     # находится не зоне действия других кораблей
                     for i in ship_coordinates:
-                        if l == 0:
+                        if len_of_ships_list_in_storage == 0:
                             for d, z in [(d, z) for d in halo_pattern_h for z in halo_pattern_v]:
                                 halo_x = i[0] + d
                                 halo_y = i[1] + z
@@ -134,7 +138,7 @@ def construct_ships(num, l):
                                 ship_halo_coordinates.append(halo_pair)
                         # для всех следующих проверяем, попадают ли точки корабля в множество точек halo
                         # если нет - добавляем, если да, то просим переввести корабль
-                        elif l != 0:
+                        elif len_of_ships_list_in_storage != 0:
                             # сравниваем попадают ли точки добавляемого корабля в множество halo имеющихся кораблей
                             if i in ship_halo_coordinates:
                                 raise IndexError
@@ -255,12 +259,12 @@ def main():
 
     player_1_field = field_generation()  # создаем поле боя для первого игрока
     COUNT = 0
-    l = len(storage.items)
+    len_of_ships_list = len(storage.items)
     player = 'robot1'  # input_function('Игрок 1 - Ваше имя: ') #human only!
     for i in NUMBER_OF_SHIPS:
-        ship = Ships.construct(player, construct_ships(i, l))
+        ship = Ships.construct(player, construct_ships(i, len_of_ships_list))
         storage.items.append(ship)
-        l = len([ship for ship in ships if ship.name is player])
+        len_of_ships_list = len([ship for ship in ships if ship.name is player])
         render_field_after_ships_placement(player_1_field, storage.items[COUNT])
         COUNT += 1
     converted = convert_to_list(ship_coordinates_list)
@@ -278,11 +282,11 @@ def main():
     player_2_field = field_generation()  # поле боя для второго игрока
 
     player = 'robot2'  # input_function('Игрок 2 - Ваше имя: ')
-    l = len([ship for ship in ships if ship.name is player])
+    len_of_ships_list = len([ship for ship in ships if ship.name is player])
     for i in NUMBER_OF_SHIPS:
-        ship = Ships.construct(player, construct_ships(i, l))
+        ship = Ships.construct(player, construct_ships(i, len_of_ships_list))
         storage.items.append(ship)
-        l = len([ship for ship in ships if ship.name is player])
+        len_of_ships_list = len([ship for ship in ships if ship.name is player])
         render_field_after_ships_placement(player_2_field, storage.items[COUNT])
         COUNT += 1
     converted = convert_to_list(ship_coordinates_list)
@@ -375,7 +379,7 @@ def main():
                     game_state = False
                     flag_player_1 = False
                     flag_player_2 = False
-                    print('\nИгрок ', players[1].name, 'победил.\nСвое поле')
+                    print('\nИгрок ', players[1].name, 'победил.\nСвое поле: ')
                     render_field(player_2_field)  # свое поле
                     print('Поле соперника: ')
                     render_field(player_1_field)
