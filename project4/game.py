@@ -10,7 +10,7 @@ from func import get_input_function
 
 NUMBER_OF_SHIPS = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1] #паттерн для создания кораблей
 input_function = get_input_function()
-ship_coordinates_list = []  # множество кординат всех коралбей одного игрока
+ship_coordinates_list = []  # множество кординат всех кораблей одного игрока
 ship_halo_coordinates = []  # множество точек, окружающие корабли, куда нельзя ставить другие корабли
 halo_pattern_h = [-1, 0, 1]  # это паттерны для обхода координат кораблей, для построения зоны, куда нельзя
 halo_pattern_v = [1, 0, -1]  # ставить корабли
@@ -127,15 +127,15 @@ def construct_ships(num, len_of_ships_list_in_storage):
                     ship_coordinates = [(x, y) for y in range(y, y + num)]
                     # проверка по вертикали - halo
                     # мы ставим корабль только тогда, когда он не пересекается с другими и
-                    # находится не зоне действия других кораблей
+                    # находится не в зоне действия других кораблей
                     for i in ship_coordinates:
                         if len_of_ships_list_in_storage == 0:
                             for d, z in [(d, z) for d in halo_pattern_h for z in halo_pattern_v]:
                                 halo_x = i[0] + d
                                 halo_y = i[1] + z
                                 halo_pair = (halo_x, halo_y)
-                                # halo.append(halo_pair)
                                 ship_halo_coordinates.append(halo_pair)
+
                         # для всех следующих проверяем, попадают ли точки корабля в множество точек halo
                         # если нет - добавляем, если да, то просим переввести корабль
                         elif len_of_ships_list_in_storage != 0:
@@ -144,7 +144,7 @@ def construct_ships(num, len_of_ships_list_in_storage):
                                 raise IndexError
                             else:
                                 # print('Не попадаем в множество')
-                                halo_pair = (i[0], i[1])  # (halo_x, halo_y)
+                                halo_pair = (i[0], i[1])
                                 ship_halo_coordinates.append(halo_pair)
 
             # добавляем координаты корабля в список с координатами кораблей
@@ -157,7 +157,7 @@ def construct_ships(num, len_of_ships_list_in_storage):
                     halo_pair = (halo_x, halo_y)
                     ship_halo_coordinates.append(halo_pair)
 
-            state = True
+            #state = True
             ship_coordinates_list.append(ship_coordinates)
             return (ship_coordinates)
         except IndexError:
@@ -272,7 +272,7 @@ def main():
 
     #выводим имя и поле с расставленными кораблями игрока 1
 
-    print('Поле игрока ', players[0].name)
+    print('Расстановка кораблей ', players[0].name)
     render_field(player_1_field)
 
     # создаем второго игрока
@@ -293,9 +293,10 @@ def main():
     storage.player.append(Player.construct(player, 2, converted))
 
     #выводим имя и поле с расставленными кораблями игрока 2
-    print('Поле игрока ', players[1].name)
+    print('Расстановка кораблей игрока ', players[1].name)
     render_field(player_2_field)
 
+    input_function('For start - press Enter.')
     # все возможные ходы игрока robot1
     player_one_positions = field_positions_generation()
 
