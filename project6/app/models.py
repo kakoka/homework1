@@ -25,17 +25,18 @@ class BlogPostModel(object):
         self.text = form_data['text']
         # self.another_text = form_data['text']
         self.time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
-        self.author = 'author'
+        self.author = form_data['author']
 
 
 class User(UserMixin):
+    # proxy for a database of users
     user_database = {"JohnDoe": ("JohnDoe", "John"),
                "JaneDoe": ("JaneDoe", "Jane")}
 
-    def __init__(self, userid, password):
-        self.id = userid
+    def __init__(self, username, password):
+        self.id = username
         self.password = password
 
-    @staticmethod
-    def get(cls, id):
+    @classmethod
+    def get(cls,id):
         return cls.user_database.get(id)

@@ -4,11 +4,11 @@ from flask import Flask, request, render_template, redirect, url_for
 
 from flask_bootstrap import Bootstrap
 from wtf_tinymce import wtf_tinymce
-
+from flask_login import LoginManager
 
 import config
 from forms import BlogPostForm
-from models import Storage, BlogPostModel
+from models import Storage, BlogPostModel, User
 
 
 import logging
@@ -28,17 +28,17 @@ def create_app():
     wtf_tinymce.init_app(app)
     Bootstrap(app)
 
-    @app.route('/', methods=['GET', 'POST'])
-    def login():
-        error = None
-        if request.method == 'POST':
-            if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-                error = 'Invalid Credentials. Please try again.'
-            else:
-                return redirect('/blog')
-        return render_template('login.html', error=error)
+    # @app.route('/', methods=['GET', 'POST'])
+    # def login():
+    #     error = None
+    #     if request.method == 'POST':
+    #         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+    #             error = 'Invalid Credentials. Please try again.'
+    #         else:
+    #             return redirect('/blog')
+    #     return render_template('login.html', error=error)
 
-    @app.route('/blog', methods=['GET', 'POST'])
+    @app.route('/', methods=['GET', 'POST'])
     def home():
         storage = Storage()
         all_items = storage.items

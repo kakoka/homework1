@@ -20,6 +20,6 @@ class BlogPostForm(FlaskForm):
     ])
     text = TinyMceField(label='Article Text', tinymce_options={'toolbar': 'bold italic | link | code'}
     )
-    # another_text = StringField(label='Another text', validators=[
-    #     validators.Length(min=10, max=3500),
-    # ])
+    author = StringField(label='Author', validators=[
+         validators.Length(min=10, max=3500),
+     ])
