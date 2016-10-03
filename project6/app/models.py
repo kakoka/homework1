@@ -18,7 +18,7 @@ class Storage(object):
             cls._obj = object.__new__(cls)
             cls.items = []
             try:
-                with open(cls.filename, 'rt') as file:
+                with open(cls.filename, 'rt', encoding='utf-8') as file:
                     cls.items = json.load(file)
             except:
                 pass
@@ -31,7 +31,7 @@ class Storage(object):
         def json_default(o):
             return o.__dict__
         with open(cls.filename, 'wt') as file:
-            json.dump(cls.items, file, default=json_default, indent=4)
+            json.dump(cls.items, file, default=json_default, indent=2)
 
 class BlogPostModel(object):
     def __init__(self, form_data):
