@@ -1,16 +1,12 @@
 {% extends '_base_template.html' %}
 {% import 'wtf_tinymce/editor.html' as tinymce with context %}
 
-{% block tail %}
-    {{ super() }}
-    {{ tinymce.init_wtf_tinymce(default_content_css='css/tinymce.css') }}
-{% endblock %}
 
 {% block content %}
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
+
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <ul class=flashes>
@@ -32,18 +28,23 @@
                 </dl>
                 <input type="submit" value="{{ 'Submit' }}" class="btn">
             </form>
-        </div>
+
     </div>
 </div>
 <div class="container">
     <div class="row">
     {% for item in items %}
-        <h3 class="post-title">{{ item.title }}</h3>
-        <h4>{{ item.author }}</h4>
-        <h5>{{ item.time_stamp }}</h5>
-        {{ item.text }}
+        <h4 class="post-title">{{ item.title }}</h4>
+        <h5>{{ item.author }}</h5>
+        <h6>{{ item.time_stamp }}</h6>
+        {{ item.text | safe}}
      {% endfor %}
     </div>
 </div>
 
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ tinymce.init_wtf_tinymce() }}
 {% endblock %}

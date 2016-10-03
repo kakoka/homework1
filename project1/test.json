@@ -1,0 +1,26 @@
+{
+  "q_and_a": 
+  [
+    {
+    "qwe": "What is your name?",
+    "ans": [
+                "pasha",
+                "pavel",
+                 "Pash",
+                 "Paul"
+               ]
+    },
+      {
+    "qwe": "What is number?",
+    "ans": [
+                "11",
+                "112",
+                 "44",
+                 "030",
+                 "12",
+                 "323"
+               ]
+    }
+  ]
+
+}

@@ -61,3 +61,132 @@ Number of right answers:7	Number of wrong answers:3
 Username:Pasha Oppa
 2016-09-07 23:18:13.121228
 Exit from game.
+Username:Oper Tre
+2016-09-09 12:47:50.326432
+|		Question		|Answer		|True or False
+Username:Oper Tre
+2016-09-09 12:47:50.326432
+|		Question		|Answer		|True or False
+Username:Oper Tre
+2016-09-09 12:47:50.326432
+|		Question		|Answer		|True or False
+Oper Tre
+2016-09-09 12:47:57.649879
+1. Как зовут создателя языка Python?: 		|Гвидо		|False
+2. В каком году был создан Python?: 		|1991		|True
+3. Какая последняя версия Python (2 или 3)?: 		|3		|True
+4. Какой оператор в Python позволяет делить числа с остатком?: 		|/		|True
+5. Какой оператор в Python возводит числа в степень?: 		|**		|True
+6. Можно ли использовать слово false в качестве переменной (да или нет)?: 		|нет		|True
+7. int(True) это 0 или 1?: 		|1		|False
+8. int(1.0e4) это сколько?: 		|10000		|True
+9. Вычислите False + 5.0 = ?: 		|5.0		|True
+10. Сюда еще можно добавить +100500 вопросов(да или нет)?: 		|да		|False
+Game over.
+Number of right answers:7	Number of wrong answers:3
+
+Username:Oper Tre
+2016-09-09 12:47:57.649879
+Exit from game.
+Username:Ope Tt
+2016-09-09 13:58:43.037639
+|		Question		|Answer		|True or False
+Ope Tt
+2016-09-09 13:58:45.208953
+1. Как зовут создателя языка Python?: 		|Гвидо		|False
+2. В каком году был создан Python?: 		|1991		|False
+3. Какая последняя версия Python (2 или 3)?: 		|3		|False
+4. Какой оператор в Python позволяет делить числа с остатком?: 		|/		|False
+5. Какой оператор в Python возводит числа в степень?: 		|**		|False
+6. Можно ли использовать слово false в качестве переменной (да или нет)?: 		|нет		|False
+7. int(True) это 0 или 1?: 		|1		|False
+8. int(1.0e4) это сколько?: 		|10000		|False
+9. Вычислите False + 5.0 = ?: 		|5.0		|False
+10. Сюда еще можно добавить +100500 вопросов(да или нет)?: 		|да		|False
+Game over.
+Number of right answers:0	Number of wrong answers:10
+
+Username:Ope Tt
+2016-09-09 13:58:45.208953
+Exit from game.
+Username: 
+2016-09-09 13:58:52.937048
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 14:06:13.299969
+|		Question		|Answer		|True or False
+Username: 
+2016-09-09 14:06:19.002915
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 14:06:24.201094
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 14:06:24.201094
+|		Question		|Answer		|True or False
+Username: 
+2016-09-09 14:07:15.275703
+|		Question		|Answer		|True or False
+Username:  
+2016-09-09 14:07:46.314903
+|		Question		|Answer		|True or False
+Username:  
+2016-09-09 14:07:46.314903
+|		Question		|Answer		|True or False
+Username:   
+2016-09-09 14:13:15.942024
+|		Question		|Answer		|True or False
+Username:   
+2016-09-09 14:13:15.942024
+|		Question		|Answer		|True or False
+Username: 
+2016-09-09 14:18:32.811441
+|		Question		|Answer		|True or False
+Username: 
+2016-09-09 14:20:06.749948
+|		Question		|Answer		|True or False
+Username:Dsfs2
+2016-09-09 14:23:02.014495
+|		Question		|Answer		|True or False
+Username:Dsfs2
+2016-09-09 14:23:02.014495
+Exit from game.
+Username:2S
+2016-09-09 14:23:14.525239
+|		Question		|Answer		|True or False
+Username:2S
+2016-09-09 14:23:14.525239
+Exit from game.
+Username: 2
+2016-09-09 14:23:22.321240
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 16:02:46.407032
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 16:02:46.407032
+Exit from game.
+Username:
+2016-09-09 16:03:23.847394
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 16:03:23.847394
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 16:03:23.847394
+|		Question		|Answer		|True or False
+Username:
+2016-09-09 16:03:23.847394
+|		Question		|Answer		|True or False
+Username:Dasdas
+2016-09-09 16:04:00.791558
+|		Question		|Answer		|True or False
+Username:Dasdas
+2016-09-09 16:04:00.791558
+|		Question		|Answer		|True or False
+Username:Dasdas
+2016-09-09 16:04:00.791558
+|		Question		|Answer		|True or False
+Username:Dasdas
+2016-09-09 16:04:00.791558
+Exit from game.

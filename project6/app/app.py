@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, render_template, redirect, url_for
-
+from flask import Flask, request, render_template, url_for, redirect
 from flask_bootstrap import Bootstrap
 from wtf_tinymce import wtf_tinymce
-from flask_login import LoginManager
 
 import config
 from forms import BlogPostForm
-from models import Storage, BlogPostModel, User
-
+from models import Storage, BlogPostModel
 
 import logging
 
 logger = logging.getLogger(__name__)
 
-
-__author__ = 'sobolevn'
-
-
-
+__author__ = 'kakoka'
 
 def create_app():
 
@@ -27,16 +20,6 @@ def create_app():
     app.config.from_object(config)
     wtf_tinymce.init_app(app)
     Bootstrap(app)
-
-    # @app.route('/', methods=['GET', 'POST'])
-    # def login():
-    #     error = None
-    #     if request.method == 'POST':
-    #         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-    #             error = 'Invalid Credentials. Please try again.'
-    #         else:
-    #             return redirect('/blog')
-    #     return render_template('login.html', error=error)
 
     @app.route('/', methods=['GET', 'POST'])
     def home():
@@ -48,13 +31,14 @@ def create_app():
             if form.validate():
                 model = BlogPostModel(form.data)
                 all_items.append(model)
+                storage.save()
+                return redirect(url_for('home'))
             else:
                 logger.error('Someone have submitted an incorrect form!')
         else:
             form = BlogPostForm()
 
         return render_template(
-            # '_base_boots.html',
             'home.html',
             form=form,
             items=all_items,

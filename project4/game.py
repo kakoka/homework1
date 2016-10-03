@@ -76,7 +76,8 @@ def construct_ships(num, len_of_ships_list_in_storage):
     while state is False:
         try:
             # получаем от робота координаты
-            got_coordinates = input_ships_coordinates_by_robot(num)  # функция, которая генерит рандомные координаты
+            got_coordinates = input_ship_coordinates_by_human(num)  # функция, которая генерит рандомные координаты
+            got_coordinates = input_ships_coordinates_by_robot(num)
             x = got_coordinates[0]  # координата x
             y = got_coordinates[1]  # координата y
             z = got_coordinates[2]  # z - ориентация 0 - горизонтально, 1 - вертикально
@@ -114,12 +115,12 @@ def construct_ships(num, len_of_ships_list_in_storage):
                             # сравниваем попадают ли точки добавляемого корабля в множество halo имеющихся кораблей
                             # если не попадают, добавляем к множеству точек, точки нового корабля
                             if i in ship_halo_coordinates:
-                                # print('Попадаем на неправильные клетки! Надо переставить корабль') #это для ручного ввода
+                                #print('Попадаем на неправильные клетки! Надо переставить корабль') #это для ручного ввода
                                 raise IndexError
 
                                 # если попадают - ошибка!
                             else:
-                                # print('Не попадаем в множество')
+                                #print('Не попадаем в множество')
                                 halo_pair = (i[0], i[1])
                                 ship_halo_coordinates.append(halo_pair)
                 # для вертикальной ориентация корабля
@@ -266,6 +267,7 @@ def main():
         storage.items.append(ship)
         len_of_ships_list = len([ship for ship in ships if ship.name is player])
         render_field_after_ships_placement(player_1_field, storage.items[COUNT])
+        #print(player_1_field)
         COUNT += 1
     converted = convert_to_list(ship_coordinates_list)
     storage.player.append(Player.construct(player, 1, converted))
