@@ -1,12 +1,9 @@
 {% extends '_base_template.html' %}
-{% import 'wtf_tinymce/editor.html' as tinymce with context %}
-
 
 {% block content %}
 
 <div class="container">
     <div class="row">
-
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <ul class=flashes>
@@ -28,22 +25,16 @@
                 </dl>
                 <input type="submit" value="{{ 'Submit' }}" class="btn">
             </form>
-
     </div>
-</div>
 <div class="container">
     <div class="row">
-    {% for item in items %}
-
-        <img src="{{ qrcode(item.text) }}" height="100" width="100">
-        {{ item.text | safe}}
-     {% endfor %}
+    {% if not send and items == None %}
+        <p></p>
+    {% else %}
+        <img src="{{ qrcode(items) }}" height="200" width="200">
+        <a href="tmp/you_qrcode.png">download you qr-code</a>
+    {% endif %}
     </div>
 </div>
 
-{% endblock %}
-
-{% block tail %}
-    {{ super() }}
-    {{ tinymce.init_wtf_tinymce() }}
 {% endblock %}
