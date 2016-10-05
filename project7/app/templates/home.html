@@ -1,0 +1,49 @@
+{% extends '_base_template.html' %}
+{% import 'wtf_tinymce/editor.html' as tinymce with context %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class=flashes>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {% from "macros/render_field.html" import render_field %}
+            <form method="POST" action="{{ url_for('home') }}"  type="submit" class="form-horizontal">
+                {{ form.hidden_tag() }}
+                <dl>
+                    {% for field in form %}
+                        {% if field.id != 'csrf_token' %}
+                            {{ render_field(field) }}
+                        {% endif %}
+                    {% endfor %}
+                </dl>
+                <input type="submit" value="{{ 'Submit' }}" class="btn">
+            </form>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+    {% for item in items %}
+
+        <img src="{{ qrcode(item.text) }}" height="100" width="100">
+        {{ item.text | safe}}
+     {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ tinymce.init_wtf_tinymce() }}
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{%- block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+
+    {% block metas %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock metas %}
+
+    {% block styles %}
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.css')}}">
+    {% endblock styles %}
+
+    {% block script %}
+         <script src="{{url_for('static', filename='bootstrap/jquery.js')}}"></script>
+         <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+    {% endblock script %}
+{% endblock head %}
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Welcome to my blog!</h1>
+</div>
+
+    {% block tail %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
