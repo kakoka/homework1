@@ -37,7 +37,6 @@
         <h4 class="post-title">{{ item.title }}</h4>
         <h5>{{ item.author }}</h5>
         <h6>{{ item.time_stamp }}</h6>
-        <img src="{{ qrcode(item.title) }}"/>
         {{ item.text | safe}}
      {% endfor %}
     </div>
