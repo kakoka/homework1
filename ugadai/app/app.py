@@ -11,13 +11,16 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'kakoka'
 
+rnd_number = random.randint(1, 99)
+
 def create_app():
 
     app = Flask(__name__, template_folder='templates')
     app.config.from_object(config)
 
     # задаем случайное число
-    rnd_number = random.randint(1, 99)
+    #global rnd_number
+    #rnd_number = random.randint(1, 99)
     # и печатаем его в консоли, правда почему то оно два раза печатается... пока не понял
     print(rnd_number)
 
@@ -37,13 +40,15 @@ def create_app():
                 if form.data['number']:
                     if form.data['number'] < rnd_number:
                         response = "Меньше!"
-                        pass
+                        print(form.data['number'], rnd_number)
                     elif form.data['number'] > rnd_number:
                         response = "Больше!"
-                        pass
+                        print(form.data['number'], rnd_number)
                     else:
                         print(rnd_number)
-                        response = "Угадал!"
+                        response = "Угадал! Перезагрузи страницу!"
+                        global rnd_number
+                        rnd_number = random.randint(1, 99)
                 else:
                     form = EnterNumber()
             else:
