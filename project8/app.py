@@ -11,32 +11,12 @@ __author__ = 'sobolevn'
 app = Flask(__name__, template_folder='templates')
 app.config.from_object(config)
 db = SQLAlchemy(app)
+db.init_app(app)
 db.create_all()
 Bootstrap(app)
 wtf_tinymce.init_app(app)
 
 def create_app():
-    # @app.route('/', methods=['GET', 'POST'])
-    # def index():
-    # #     from models import Post
-    #     post_form_class = model_form(Post, base_class=FlaskForm, db_session=db.session)
-    #     if request.method == 'POST':
-    #         form = post_form_class(request.form)
-    #         if form.validate():
-    #             post = Post(**form.data)
-    #             print(post)
-    #             db.session.add(post)
-    #             db.session.commit()
-    #             flash('Post created!')
-    #         else:
-    #             flash('Form is not valid! Post was not created.')
-    #     else:
-    #         form = post_form_class()
-    #     posts = Post.query.all()
-    #     #db.create_all()
-
-        # return render_template('home.html', form=form, posts=posts)
-    #
     @app.route('/post_with_form', methods=['GET', 'POST'])
     def post_with_form():
         from models import Post, User
@@ -47,8 +27,7 @@ def create_app():
             #print(User.query.get(form.author.data))
             if form.validate():
                 post = Post(user=form.author.data, title=form.title.data, content=form.content.data) #, form.author.data)
-                # print(form.author.data)
-                # print(post)
+                #db.session.query(post)
                 db.session.add(post)
                 db.session.commit()
                 flash('Post created!')
@@ -56,7 +35,6 @@ def create_app():
             else:
                 flash('Form is not valid! Post was not created.')
         posts = Post.query.all()
-        #print(posts)
         return render_template('post_with_form.html', form=form, posts=posts)
 
 
