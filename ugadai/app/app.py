@@ -18,7 +18,7 @@ def create_app():
     app = Flask(__name__, template_folder='templates')
     app.config.from_object(config)
 
-    # задаем случайное число
+    # задаем   случайное число
     #global rnd_number
     #rnd_number = random.randint(1, 99)
     # и печатаем его в консоли, правда почему то оно два раза печатается... пока не понял
