@@ -1,0 +1,45 @@
+{% extends '_base_template.html' %}
+
+{% block content %}
+
+<div class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% from "macros/render_field.html" import render_field %}
+    <form method="POST" action="{{ url_for('add_user') }}">
+        {{ form.hidden_tag() }}
+        <dl>
+            {% for field in form %}
+                {% if field.id != 'csrf_token' %}
+                    {{ render_field(field) }}
+                {% endif %}
+            {% endfor %}
+        </dl>
+        <input type="submit" value="{{ 'Submit' }}" class="btn">
+    </form>
+
+    <div class="users">
+        {% for item in users %}
+            <div class="user">
+                <h3> {{ item.username }} </h3>
+                <h4> {{ item.email }} </h4>
+{#                <h4> {{ datetime.fromtimestamp(item.birth_date) }} </h4>#}
+            </div>
+
+        {% endfor %}
+
+
+    
+    </div>
+
+</div>
+
+{% endblock %}

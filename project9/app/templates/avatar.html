@@ -1,0 +1,45 @@
+{% extends '_base_template.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+</div>
+    <div class="container">
+    <div class="row">
+    {% from "macros/render_field.html" import render_field %}
+    <form class="form" role="form" method="POST" enctype="multipart/form-data" action="{{ url_for('avatar_route.avatar') }}">
+        {{ form.hidden_tag() }}
+        <dl>
+            {% for field in form %}
+                {% if field.id != 'csrf_token' %}
+                    {{ field.label }}
+                    {{ field() }}
+                {% endif %}
+            {% endfor %}
+        </dl>
+        <input type="submit" value="{{ 'Submit' }}" class="btn">
+    </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% for item in avatars %}
+            <div class="user">
+                <h3> {{ item.name }} </h3>
+                <h4> {{ item.filename }} </h4>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
