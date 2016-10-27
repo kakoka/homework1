@@ -52,10 +52,11 @@ def get_or_create(session, model, **kwargs):
         session.commit()
         return instance
 
-def my_cool_logger(url_address):
+def my_cool_logger():
     def decorator(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
+            url_address = request.path
             if app.debug:
                 ip = request.environ.get(
                     'X-REMOTE_ADDR', request.remote_addr)
@@ -79,13 +80,13 @@ def my_cool_logger(url_address):
     return decorator
 
 @app.route('/')
-@my_cool_logger('/')
+@my_cool_logger()
 def index():
     return 'index'
 
 
 @app.route('/home')
-@my_cool_logger('home')
+@my_cool_logger()
 def home():
     return 'home'
 

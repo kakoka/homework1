@@ -28,7 +28,7 @@ wtf_tinymce.init_app(app)
 
 def create_app():
     @app.route('/post', methods=['GET', 'POST'])
-    @my_cool_logger('/post')
+    @my_cool_logger()
     def post():
         form = BlogPostForm(request.form)
         if request.method == 'POST':
@@ -45,7 +45,7 @@ def create_app():
 
 
     @app.route('/user', methods=['GET', 'POST'])
-    @my_cool_logger('/user')
+    @my_cool_logger()
     def user():
         form = AddUserForm(request.form)
         if request.method == 'POST':
@@ -62,7 +62,7 @@ def create_app():
         return render_template('user.html', form=form, user=all_users)
 
     @app.route('/avatar', methods=['GET', 'POST'])
-    @my_cool_logger('/avatar')
+    @my_cool_logger()
     def avatar():
         form = UploadAvatar()
         if request.method == 'POST':
@@ -82,7 +82,7 @@ def create_app():
 
 
     @app.route('/profile', methods=['GET', 'POST'])
-    @my_cool_logger('/profile')
+    @my_cool_logger()
     def profile():
         form = SelectUserProfile(request.form)
         if request.method == 'POST':
@@ -97,7 +97,7 @@ def create_app():
             return render_template('all_posts.html', form=form, posts=q)
 
     @app.route('/upload/<path:filename>')
-    @my_cool_logger('/upload/<path:filename>')
+    @my_cool_logger()
     def download_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'],
                                    filename, as_attachment=True)
