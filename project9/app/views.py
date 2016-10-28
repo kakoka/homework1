@@ -7,17 +7,18 @@ from werkzeug import secure_filename
 
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 
-# from app import db
-
 __author__ = 'kakoka'
 
-main_route = Blueprint('main_route', __name__)
 
-post_route = Blueprint('post_route', __name__, url_prefix='/post') #, template_folder='templates')
+
+main_route = Blueprint('main_route', __name__)
+posts_route = Blueprint('posts_route', __name__, url_prefix='/posts') #, template_folder='templates')
 user_route = Blueprint('user_route', __name__, url_prefix='/user')
-avatar_route = Blueprint('avatar_route', __name__, url_prefix='/avatar')
+ajax_route = Blueprint('ajax_rote', __name__, url_prefix='/ajax')
 profile_route = Blueprint('profile_route', __name__, url_prefix='/profile')
+
 upload_route = Blueprint('upload_route', __name__, url_prefix='/upload')
+
 login_route = Blueprint('login_route', __name__, url_prefix='/login')
 logout_route = Blueprint('logout_route', __name__, url_prefix='/logout')
 
@@ -28,35 +29,26 @@ logout_route = Blueprint('logout_route', __name__, url_prefix='/logout')
 @my_cool_logger()
 def main_test():
     urls = {
-        'username': current_user.__repr__(),
+        'username': current_user.name,
         'local': url_for('.main_test'),
-        'post': url_for('post_route.post'),
+        'posts': url_for('posts_route.post'),
         'user': url_for('user_route.user'),
-        'avatar': url_for('avatar_route.avatar'),
         'profile': url_for('profile_route.profile'),
         'login': url_for('login_route.login')
     }
     return jsonify(urls)
 
-@post_route.route('/', methods=['GET', 'POST'])
-# @login_required
+#show all posts
+@posts_route.route('/', methods=['GET', 'POST'])
 @my_cool_logger()
 def post():
-    form = BlogPostForm(request.form)
-    if request.method == 'POST':
-        if form.validate():
-            post = Post(user=form.author.data, title=form.title.data, content=form.content.data)
-            current_session.add(post)
-            current_session.commit()
-            flash('Post created!')
-            return redirect(url_for('post_route.post'))
-        else:
-            flash('Form is not valid! Post was not created.')
-    posts = current_session.query(Post).all()
-    return render_template('post.html', form=form, posts=posts)
+    if request.method == 'GET':
+        posts = current_session.query(Post).all()
+        return render_template('all_posts.html', posts=posts)
 
-# user path
+# add user's path
 @user_route.route('/', methods=['GET', 'POST'])
+@login_required
 @my_cool_logger()
 def user():
     form = AddUserForm(request.form)
@@ -70,42 +62,67 @@ def user():
         else:
             flash('Form is not valid! User was not created.')
     all_users = current_session.query(User).all()
-
     return render_template('user.html', form=form, user=all_users)
 
-@avatar_route.route('/', methods=['GET', 'POST'])
-@my_cool_logger()
-def avatar():
-    form = UploadAvatar()
-    if request.method == 'POST':
-        if form.validate():
-            avatar_f = Avatar(user=form.user.data, filename=form.upload.data.filename) #, avatar=form.author.data)
-            f_name = secure_filename(form.upload.data.filename)
-            form.upload.data.save('upload/avatar/' + f_name)
-            current_session.add(avatar_f)
-            current_session.commit()
-            flash('avatar uploaded!')
-            return redirect(url_for('avatar'))
-        else:
-            flash('Form is not valid!')
-    all_avatars = current_session.query(Avatar).all()
-
-    return render_template('avatar.html', form=form, avatars=all_avatars)
-
 @profile_route.route('/', methods=['GET', 'POST'])
-@my_cool_logger()
-def profile():
-    form = SelectUserProfile(request.form)
-    if request.method == 'POST':
-        if form.validate():
-            q = current_session.query(Post).filter(Post.user == form.user.data).all()
-            print(form.user.data)
-            a = current_session.query(Avatar).join(User).filter(Avatar.user == form.user.data).all()
-            u = current_session.query(User).join(Avatar).filter(Avatar.user == form.user.data).all()
-            return render_template('all_posts.html', form=form, posts=q, avatar=a, users=u)
+@profile_route.route('/<int:id>', methods=['GET', 'POST'])
+@login_required
+#@my_cool_logger()
+def profile(id):
+    form = BlogPostForm()
+    if id == current_user.id and request.method == 'GET':
+        posts = current_session.query(Post).filter(Post.user == current_user).all()
+        return render_template('post.html', form=form, posts=posts)
+
+    elif request.method == 'POST' and id == current_user.id and form.validate():
+        post = Post(user=current_user, title=form.title.data, content=form.content.data)
+        current_session.add(post)
+        current_session.commit()
+        flash('post_created')
+        route_to = '/profile/' + str(current_user.id)
+        return redirect(route_to)
     else:
-        q = current_session.query(Post).all()
-        return render_template('all_posts.html', form=form, posts=q)
+        return redirect(url_for('login_route.login'))
+
+@profile_route.route('/avatar', methods=['GET', 'POST'])
+def avatar():
+    pass
+# # @profile_route.route('/avatar', methods=['GET', 'POST'])
+# @login_required
+# @my_cool_logger()
+# def avatar():
+#     form = UploadAvatar()
+#     if id == current_user.id:
+#         if request.method == 'POST':
+#             if form.validate():
+#                 avatar_f = Avatar(user=current_user, filename=form.upload.data.filename) #, avatar=form.author.data)
+#                 f_name = secure_filename(form.upload.data.filename)
+#                 form.upload.data.save('upload/avatar/' + f_name)
+#                 current_session.add(avatar_f)
+#                 current_session.commit()
+#                 flash('avatar uploaded!')
+#                 route_to = '/profile/' + str(current_user.id)
+#                 return redirect(url_for(route_to))
+#             else:
+#                 flash('Form is not valid!')
+#     all_avatars = current_session.query(Avatar).all()
+#
+#     return render_template('avatar.html', form=form, avatars=all_avatars)
+#ajax
+@ajax_route.route('/', methods=['GET', 'POST'])
+@login_required
+@my_cool_logger()
+def ajax():
+    form = BlogPostForm()
+    if request.method == 'POST': # and form.validate():
+        post = Post(user=current_user, title=form.title.data, content=form.content.data)
+        print(post)
+        current_session.add(post)
+        current_session.commit()
+        return jsonify(post.title, post.content, current_user.name) #{'success':True}), 200, {'ContentType':'application/json'} #, 'Post created!'
+    if request.method == 'GET':
+        return jsonify(current_user.name)
+    return 'Invalid form'
 
 @upload_route.route('/upload/<path:filename>')
 @my_cool_logger()
@@ -122,12 +139,13 @@ def login():
         user = current_session.query(User).filter(User.name == form.username.data).first() #, User.password == form.password.data).first()
         print('USER!!!', user)
         if user:
-            flash(u'Logged in as %s' % form.username.data)
+            flash(u'Logged in as %s' % current_user.name)
             user.is_authenticated = True
             # session['user_id'] = form.username.id
             login_user(user, remember=True)
-            return redirect(url_for('main_route.main_test'))
-        flash(u'Un Successfully un logged in as %s' % form.username.data)
+            route_to = '/profile/' + str(current_user.id)
+            print(route_to)
+            return redirect(route_to)
         # session['user_id'] = form.user.id
         # print(session['user_id'])
 

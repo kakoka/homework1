@@ -18,7 +18,14 @@
 </div>
     <div class="container">
         <div class="row">
-            {{ render_form(form, action_url=url_for('post_route.post'), action_text='Submit') }}
+            {{ render_form(form, action_url=url_for('profile_route.profile', id=current_user.id), action_text='Submit') }}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="result">
+
+            </div>
         </div>
     </div>
 <div class="container">
@@ -30,11 +37,7 @@
                 <h5>{{ item.date_created }}</h5>
                 <div class="post-text">{{ item.content | safe}}</div>
             </div>
-
         {% endfor %}
-
-
-
     </div>
 </div>
 

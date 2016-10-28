@@ -16,7 +16,7 @@
     <div class="container">
     <div class="row">
     {% from "macros/render_field.html" import render_field %}
-    <form class="form" role="form" method="POST" enctype="multipart/form-data" action="{{ url_for('avatar_route.avatar') }}">
+    <form class="form" role="form" method="POST" enctype="multipart/form-data" action="{{ url_for('profile_route.avatar') }}">
         {{ form.hidden_tag() }}
         <dl>
             {% for field in form %}

@@ -4,6 +4,10 @@ from datetime import date
 from database import Base
 from flask_login import UserMixin
 
+# class Anonymous(AnonymousUserMixin):
+#   def __init__(self):
+#     self.username = 'Guest'
+
 class User(Base, UserMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)

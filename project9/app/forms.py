@@ -41,14 +41,14 @@ class BlogPostForm(FlaskForm):
     # выбираем из таблицы пользователей всех пользователей
     # get_pk - ключ, который потом записывается в полу user_id таблицы posts
 
-    author = QuerySelectField(
-        label='username',
-        query_factory=lambda: current_session.query(User),
-        get_pk=lambda item: item.id,
-        get_label=lambda item: item.name,
-        allow_blank=True,
-        blank_text='select user'
-    )
+    # author = QuerySelectField(
+    #     label='username',
+    #     query_factory=lambda: current_session.query(User),
+    #     get_pk=lambda item: item.id,
+    #     get_label=lambda item: item.name,
+    #     allow_blank=True,
+    #     blank_text='select user'
+    # )
 
 
 class AddUserForm(FlaskForm):
@@ -61,14 +61,14 @@ class AddUserForm(FlaskForm):
     confirm = PasswordField('Enter your pass again')
 
 class UploadAvatar(FlaskForm):
-    user = QuerySelectField(
-        label='username',
-        query_factory=lambda: current_session.query(User),
-        get_pk=lambda item: item.id,
-        get_label=lambda item: item.name,
-        allow_blank=True,
-        blank_text='select user'
-    )
+    # user = QuerySelectField(
+    #     label='username',
+    #     query_factory=lambda: current_session.query(User),
+    #     get_pk=lambda item: item.id,
+    #     get_label=lambda item: item.name,
+    #     allow_blank=True,
+    #     blank_text='select user'
+    # )
     upload = FileField('image', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png'], 'Images only!')

@@ -21,11 +21,44 @@
     {% endblock script %}
 {% endblock head %}
 
+<script>
+$(function() {
+        // Помещаем в переменную jQuery обьект с формой (найденой по id)
+        var $form = $('.form');
+        var $cl;
+        console.log($form);
+        // Навешиваем на форму обработчика события submit
+        $form.on('submit', function() {
+            // Делаем POST запрос средствами jQuery
+            $.post('/ajax/',
+                    {
+                // массив параметров, которые хотим передать в POST
+                title: $form.find('[name=title]').val(), // Значение инпута, найденного в форме по атрибуту name
+                content: $form.find('[name=content]').val()
+            },
+                    function(response) {
+                // Если сервер ответит со статусом 200 то выполнится эта функция
+                // и в переменной response придет ответ сервера. Если сервер ответит
+                // с content-type  'text/plain' то в переменной будет ответ одной
+                // строкой, если с 'application/json' то получите свой JSON сразу в
+                // виде массива javascript
+
+                // Показываем результат в div с классом result
+                console.log(response);
+                $('.result').html(response);
+
+            });
+            // Запрещаем браузеру делать то что он сам хочет делает при сабмите формы.
+            return false;
+        });
+    });
+</script>
+
 </head>
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Welcome to my blog with database!</h1>
+    <h3>Welcome {{ current_user.name }} !!</h3>
 </div>
 
 {% block content %}
