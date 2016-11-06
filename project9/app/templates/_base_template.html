@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{%- block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+
+    {% block metas %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock metas %}
+
+    {% block styles %}
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{ url_for('bower.static', filename='bootstrap/dist/css/bootstrap.min.css') }}">
+    {#        <link rel="stylesheet" href="{{url_for('.static', filename='bootstrap/css/bootstrap.css')}}">#}
+    {% endblock styles %}
+
+    {% block script %}
+    <script type="application/javascript" src="{{ url_for('bower.static', filename='jquery/dist/jquery.min.js')}}"></script>
+{#         <script src="{{url_for('.static', filename='bootstrap/jquery.js')}}"></script>#}
+{#         <script src="{{url_for('.static', filename='bootstrap/js/bootstrap.min.js')}}"></script>#}
+    {% endblock script %}
+{% endblock head %}
+
+<script>
+$(function() {
+        // Помещаем в переменную jQuery обьект с формой (найденой по id)
+        var $form = $('.form');
+        var $cl;
+        console.log($form);
+        // Навешиваем на форму обработчика события submit
+        $form.on('submit', function() {
+            // Делаем POST запрос средствами jQuery
+            $.post('/ajax/',
+                    {
+                // массив параметров, которые хотим передать в POST
+                title: $form.find('[name=title]').val(), // Значение инпута, найденного в форме по атрибуту name
+                content: $form.find('[name=content]').val()
+            },
+                    function(response) {
+                // Если сервер ответит со статусом 200 то выполнится эта функция
+                // и в переменной response придет ответ сервера. Если сервер ответит
+                // с content-type  'text/plain' то в переменной будет ответ одной
+                // строкой, если с 'application/json' то получите свой JSON сразу в
+                // виде массива javascript
+
+                // Показываем результат в div с классом result
+                console.log(response);
+                $('.result').html(response);
+
+            });
+            // Запрещаем браузеру делать то что он сам хочет делает при сабмите формы.
+            return false;
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h3>Welcome {{ current_user.name }} !!</h3>
+</div>
+
+{% block content %}
+{% endblock %}
+
+{% block tail %}
+{% endblock %}
+
+</body>
+</html>

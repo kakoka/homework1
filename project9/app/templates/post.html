@@ -1,0 +1,50 @@
+{% extends '_base_template.html' %}
+{% import 'wtf_tinymce/editor.html' as tinymce with context %}
+{% from 'macros/render_field.html' import render_form %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+</div>
+    <div class="container">
+        <div class="row">
+            {{ render_form(form, action_url=url_for('profile_route.profile', id=current_user.id), action_text='Submit') }}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="result">
+
+            </div>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        {% for item in posts %}
+            <div class="post">
+                <h3 class="post-title">{{ item.title }}</h3>
+                <h4>{{ item.user.name }}</h4>
+                <h5>{{ item.date_created }}</h5>
+                <div class="post-text">{{ item.content | safe}}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ tinymce.init_wtf_tinymce() }}
+{% endblock %}
