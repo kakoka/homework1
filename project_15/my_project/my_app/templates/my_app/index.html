@@ -1,0 +1,63 @@
+{% extends "my_app/_base.html" %}
+{% block content %}
+
+    <div class="container">
+    <div class="row">
+        <input type="text" id="datepicker" name="date"/>
+    </div></div>
+    <div class="row">
+        <p> </p>
+    </div>
+    <div class="container">
+    <div class="row">
+       <div id="chart-container">
+    </div>
+</div></div>
+
+<script type="text/javascript">
+    FusionCharts.ready(function() {
+    var fusioncharts = new FusionCharts({
+        type: 'line',
+        renderAt: 'chart-container',
+        width: '1000',
+        height: '500',
+        dataFormat: 'jsonurl',
+        dataSource: '/json_data/'
+    });
+    fusioncharts.render();
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+//create date pickers
+    $("#datepicker").datepicker(
+    {
+    changeMonth: true,
+    changeYear: true,
+    yearRange: '1992:2016',
+    dateFormat: 'dd/mm/yy',
+    minDate: new Date('1992/07/01'),
+    maxDate: 'today',
+    defaultDate: null,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(date)
+        {
+            $.ajax({
+                type:"POST",
+                url:"/json_data/",
+                data:date,
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                success: function(update)
+                {
+                    $("#chart-container").updateFusionCharts({dataSource: '/json_data_no/', dataFormat:'jsonurl'});
+                                    console.log(date);
+                }
+
+            });
+
+        }
+    });
+});
+</script>
+
+{% endblock %}
